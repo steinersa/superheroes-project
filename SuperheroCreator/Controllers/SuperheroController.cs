@@ -24,8 +24,8 @@ namespace SuperheroCreator.Controllers
         // GET: Superhero/Details/5
         public ActionResult Details(int id)
         {
-
-            return View();
+            Superhero superhero = context.Superheroes.Where(s => s.Id.Equals(id)).SingleOrDefault();
+            return View(superhero);
         }
 
         // GET: Superhero/Create
@@ -55,17 +55,23 @@ namespace SuperheroCreator.Controllers
         // GET: Superhero/Edit/5
         public ActionResult Edit(int id)
         {
-            Superhero superhero = context.Superheroes.Where(s => s.Id.Equals(id)).Single();
+            Superhero superhero = context.Superheroes.Where(s => s.Id.Equals(id)).SingleOrDefault();
             return View(superhero);
         }
 
         // POST: Superhero/Edit/5
         [HttpPost]
-        public ActionResult Edit(Superhero superhero)
+        public ActionResult Edit(Superhero superhero, int id)
         {
             try
             {
                 // TODO: Add update logic here
+                Superhero originalSuperhero = context.Superheroes.Where(s => s.Id.Equals(id)).SingleOrDefault();
+                originalSuperhero.name = superhero.name;
+                originalSuperhero.alterEgo = superhero.alterEgo;
+                originalSuperhero.primaryAbility = superhero.primaryAbility;
+                originalSuperhero.secondaryAbility = superhero.secondaryAbility;
+                originalSuperhero.catchphrase = superhero.catchphrase;
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -78,18 +84,19 @@ namespace SuperheroCreator.Controllers
         // GET: Superhero/Delete/5
         public ActionResult Delete(int id)
         {
-            Superhero superhero = context.Superheroes.Where(s => s.Id.Equals(id)).Single();
+            var superhero = context.Superheroes.Where(s => s.Id.Equals(id)).SingleOrDefault();
             return View(superhero);
         }
 
         // POST: Superhero/Delete/5
         [HttpPost]
-        public ActionResult Delete(Superhero superhero)
+        public ActionResult Delete(int id, Superhero superhero)
         {
             try
             {
                 // TODO: Add delete logic here
-                context.Superheroes.Remove(superhero);
+                var originalSuperhero = context.Superheroes.Where(s => s.Id == id).SingleOrDefault();
+                context.Superheroes.Remove(originalSuperhero);
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
