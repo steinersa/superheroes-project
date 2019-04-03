@@ -17,6 +17,7 @@ namespace SuperheroCreator.Controllers
         // GET: Superhero
         public ActionResult Index()
         {
+            // list of superheroes
             return View();
         }
 
@@ -63,7 +64,7 @@ namespace SuperheroCreator.Controllers
             try
             {
                 // TODO: Add update logic here
-
+                
                 return RedirectToAction("Index");
             }
             catch
@@ -75,17 +76,19 @@ namespace SuperheroCreator.Controllers
         // GET: Superhero/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            Superhero superhero = context.Superheroes.Where(s => s.Id.Equals(id)).Single();
+            return View(superhero);
         }
 
         // POST: Superhero/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(Superhero superhero)
         {
             try
             {
                 // TODO: Add delete logic here
-
+                context.Superheroes.Remove(superhero);
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
