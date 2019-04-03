@@ -32,7 +32,7 @@ namespace SuperheroCreator.Controllers
         public ActionResult Create()
         {
             Superhero superhero = new Superhero();
-            return View();
+            return View(superhero);
         }
 
         // POST: Superhero/Create
@@ -61,12 +61,12 @@ namespace SuperheroCreator.Controllers
 
         // POST: Superhero/Edit/5
         [HttpPost]
-        public ActionResult Edit(Superhero superhero, int id)
+        public ActionResult Edit(Superhero superhero)
         {
             try
             {
                 // TODO: Add update logic here
-                Superhero originalSuperhero = context.Superheroes.Where(s => s.Id.Equals(id)).SingleOrDefault();
+                Superhero originalSuperhero = context.Superheroes.Where(s => s.Id.Equals(superhero.Id)).SingleOrDefault();
                 originalSuperhero.name = superhero.name;
                 originalSuperhero.alterEgo = superhero.alterEgo;
                 originalSuperhero.primaryAbility = superhero.primaryAbility;
@@ -90,12 +90,12 @@ namespace SuperheroCreator.Controllers
 
         // POST: Superhero/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, Superhero superhero)
+        public ActionResult Delete(Superhero superhero)
         {
             try
             {
                 // TODO: Add delete logic here
-                var originalSuperhero = context.Superheroes.Where(s => s.Id.Equals(id)).SingleOrDefault();
+                var originalSuperhero = context.Superheroes.Where(s => s.Id.Equals(superhero.Id)).SingleOrDefault();
                 context.Superheroes.Remove(originalSuperhero);
                 context.SaveChanges();
                 return RedirectToAction("Index");
