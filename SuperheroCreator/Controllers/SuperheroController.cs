@@ -95,7 +95,7 @@ namespace SuperheroCreator.Controllers
             try
             {
                 // TODO: Add delete logic here
-                var originalSuperhero = context.Superheroes.Where(s => s.Id == id).SingleOrDefault();
+                var originalSuperhero = context.Superheroes.Where(s => s.Id.Equals(id)).SingleOrDefault();
                 context.Superheroes.Remove(originalSuperhero);
                 context.SaveChanges();
                 return RedirectToAction("Index");
