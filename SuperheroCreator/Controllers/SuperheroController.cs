@@ -17,13 +17,14 @@ namespace SuperheroCreator.Controllers
         // GET: Superhero
         public ActionResult Index()
         {
-            // list of superheroes
-            return View();
+            var superheroList = context.Superheroes.ToList();
+            return View(superheroList);
         }
 
         // GET: Superhero/Details/5
         public ActionResult Details(int id)
         {
+
             return View();
         }
 
@@ -54,17 +55,18 @@ namespace SuperheroCreator.Controllers
         // GET: Superhero/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Superhero superhero = context.Superheroes.Where(s => s.Id.Equals(id)).Single();
+            return View(superhero);
         }
 
         // POST: Superhero/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(Superhero superhero)
         {
             try
             {
                 // TODO: Add update logic here
-                
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
